@@ -6,7 +6,6 @@
 // 6. Если слово угадано - делаем.. (пишем текст "Поздравляю") и кнопка "Заново"
 // 7. Если висилица нарисована до конца - делаем ... (пишем текст "Ты проиграл") и кнопка "Заново"
 
-
 let body =document.querySelector('.body')
 
 // 1. Имеем массив слов
@@ -31,52 +30,61 @@ function checkAvailability(arr, val) {
 }
 
 // 4,5. Если буква есть, открываем её Если нет рисуем висилицу
-function listenrKey(slovo){
-    let keyDown = '';
-    let massivBukvi = rarbitBukvi(slovo)
-    body.addEventListener('keydown', listenerr)
+function listenerr (keyDown, massivBukvi) {
+    console.log(massivBukvi);
+    console.log(keyDown);
 
-
-        function listenerr (evt) {
-        keyDown = evt.key;
-        console.log(keyDown);
-
-        if(!(checkAvailability(massivBukvi, keyDown))) {
-            showPeople(bodyPart)
-        }
-
-
+    if(checkAvailability(massivBukvi, keyDown)) {
+        console.log(`Есть буквdddа ${keyDown}`)
         massivBukvi.forEach(function(item, i ){
-        if (item === keyDown){
-            // запустить функцию открыть букву
-            showChar(i)
-             console.log(`есть буква ${keyDown}`)
-        }
-    })
-    }
-
-    console.log(massivBukvi)
-
-    body.addEventListener('click', function(evt) {
-        keyDown = evt.target.innerText;
-        console.log(keyDown);
-        // massivBukvi.some(console.log('все полпожиельняые'))
-
-        massivBukvi.forEach(function(item, i){
             if (item === keyDown){
-                showChar(i)
                 // запустить функцию открыть букву
-                return(console.log(`есть буква ${keyDown}`))
+                showChar(i)
+                console.log(`есть буква ${keyDown}`)
             }
-            // else{
-            //     showPeople(bodyPart)
-            //     // запустить функцию нарисовать висилицу
-            //     console.log(`Нет быквы ${keyDown}`)
-            //     bodyPart++
-            // }
-            // return (keyDown)
         })
+    }else {
+        console.log(`нет букdddвы ${keyDown}`)
+        showPeople(bodyPart)
+    }
+}
+
+
+function listenrKey(slovo){
+    let slovoMassiv = rarbitBukvi(slovo)
+    body.addEventListener('keydown', function (evt){
+            key = evt.key;
+            listenerr(key, slovoMassiv)
     })
+    let keyboard = document.querySelector('.keyboard')
+    keyboard.addEventListener('click', function (evt){
+            key = evt.target.innerText;
+            console.log(key)
+            listenerr(key, slovoMassiv)
+        }
+    )
+
+
+    // body.addEventListener('click', function(evt) {
+    //     keyDown = evt.target.innerText;
+    //     console.log(keyDown);
+    //     // massivBukvi.some(console.log('все полпожиельняые'))
+    //
+    //     massivBukvi.forEach(function(item, i){
+    //         if (item === keyDown){
+    //             showChar(i)
+    //             // запустить функцию открыть букву
+    //             return(console.log(`есть буква ${keyDown}`))
+    //         }
+    //         // else{
+    //         //     showPeople(bodyPart)
+    //         //     // запустить функцию нарисовать висилицу
+    //         //     console.log(`Нет быквы ${keyDown}`)
+    //         //     bodyPart++
+    //         // }
+    //         // return (keyDown)
+    //     })
+    // })
 }
 
 function showChar(i){
@@ -154,11 +162,6 @@ alfavitMassivLower.forEach(function(item){
 })
 
 
-let keyboard = document.querySelector('.keyboard')
-keyboard.addEventListener('click', function(evt){
-    console.log(evt.target.innerText)
-    let bukva = evt.target.innerText;
-    listenrKey(bukva)
-})
+
 
 
