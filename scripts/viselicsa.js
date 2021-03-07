@@ -12,70 +12,83 @@ let body =document.querySelector('.body')
 // 1. Имеем массив слов
 let words = ['Цветок','Пыль','Мыло','кАртина','зОлото','Часы'];
 
-
-
 // 2. Получаем рандомное число для из массива слов
 function randomWord(massivSlov) {
     return Math.floor(Math.random() * Math.floor(massivSlov.length));
 }
 
-
-
-//console.log(words[randomWord(words)])
-
 // 3. Разбиваем слово на буквы (массив из букв)
 function rarbitBukvi(letter) {
     return letter.split('');
 }
-//console.log(rarbitBukvi(words[randomWord(words)]))
 
-function newWord(words){
-    console.log(randomWord(words))
+
+// Проверяем все буквы, если нет совпадения, рисуем человечка
+function checkAvailability(arr, val) {
+    return arr.some(function(arrVal) {
+        return val === arrVal;
+    });
 }
 
-
 // 4,5. Если буква есть, открываем её Если нет рисуем висилицу
-function listenrKey(word){
+function listenrKey(slovo){
     let keyDown = '';
-    console.log(word);
-    let massivBukvi = rarbitBukvi(word)
-    console.log(massivBukvi)
-    body.addEventListener('keydown', function(evt) {
+    let massivBukvi = rarbitBukvi(slovo)
+    body.addEventListener('keydown', listenerr)
+
+
+        function listenerr (evt) {
         keyDown = evt.key;
         console.log(keyDown);
-        massivBukvi.forEach(function(item){
+
+        if(!(checkAvailability(massivBukvi, keyDown))) {
+            showPeople(bodyPart)
+        }
+
+
+        massivBukvi.forEach(function(item, i ){
         if (item === keyDown){
             // запустить функцию открыть букву
-             return(console.log(`есть буква ${keyDown}`))
-        }else{
-            // запустить функцию нарисовать висилицу
-            console.log(`Нет быквы ${keyDown}`)
+            showChar(i)
+             console.log(`есть буква ${keyDown}`)
         }
-        return (keyDown)
     })
-    })
+    }
 
+    console.log(massivBukvi)
 
     body.addEventListener('click', function(evt) {
         keyDown = evt.target.innerText;
         console.log(keyDown);
-        massivBukvi.forEach(function(item){
+        // massivBukvi.some(console.log('все полпожиельняые'))
+
+        massivBukvi.forEach(function(item, i){
             if (item === keyDown){
+                showChar(i)
                 // запустить функцию открыть букву
                 return(console.log(`есть буква ${keyDown}`))
-            }else{
-                // запустить функцию нарисовать висилицу
-                console.log(`Нет быквы ${keyDown}`)
             }
-            return (keyDown)
+            // else{
+            //     showPeople(bodyPart)
+            //     // запустить функцию нарисовать висилицу
+            //     console.log(`Нет быквы ${keyDown}`)
+            //     bodyPart++
+            // }
+            // return (keyDown)
         })
     })
-
-
 }
 
-
-
+function showChar(i){
+    let char = document.querySelector(`.sharNumber${i}`)
+    char.classList.add('key-word_visible')
+}
+let bodyPart = 0;
+function showPeople(i){
+    let char = document.querySelector(`.body-part-${i}`)
+    char.classList.add('viselitsa__people_active')
+    bodyPart ++;
+}
 
 
 //Создаем "Новое слово"
@@ -88,8 +101,15 @@ buttonNewWord.addEventListener('click', function (){
     // слово из массива по этому номеру
     let word = words[number].toLowerCase();
     //разбиваем его по буквам
-    // let letterWord = rarbitBukvi(word)
-    document.querySelector('.word').textContent=word;
+    let letterWord = rarbitBukvi(word)
+    // document.querySelector('.word').textContent=word;
+
+    letterWord.forEach(function(item,i) {
+        let keyboard = document.querySelector('.word');
+        keyboard.append(newWord(item,i));
+    })
+
+
     //Проходимся по каждой букве
     listenrKey(word)
     // keyyy()
@@ -104,6 +124,18 @@ buttonNewWord.addEventListener('click', function (){
 //         // return keyDown;
 //     })
 // }
+
+// Создать слово
+function newWord(keyNumber,i){
+    let div = document.createElement('div');
+    div.classList.add('key-block');
+    let span = document.createElement('span');
+    span.classList.add('key-word', `sharNumber${i}`)
+    div.append(span)
+    span.textContent=keyNumber;
+    return div
+}
+
 
 // Создать кнопку
 function kewNew(keyNumber){
@@ -120,6 +152,7 @@ alfavitMassivLower.forEach(function(item){
     let keyboard = document.querySelector('.keyboard');
     keyboard.append(kewNew(item));
 })
+
 
 let keyboard = document.querySelector('.keyboard')
 keyboard.addEventListener('click', function(evt){

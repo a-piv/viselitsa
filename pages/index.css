@@ -80,6 +80,7 @@
     width: 2px;
     background-color: black;
     z-index: -1;
+    visibility: hidden;
 }
 
 .viselitsa__people-hand-leg{
@@ -115,34 +116,44 @@
     /*height: 30%;*/
     /*padding: 30%;*/
     border-radius: 50%;
+    visibility: hidden;
 }
 .viselitsa__people-body{
     position: absolute;
     top: 40px;
     height: 50px;
     z-index: -1;
+    visibility: hidden;
 }
 
 .viselitsa__people-hand_lert{
     left: 8%;
     top: 20%;
     transform: rotate(35deg);
+    visibility: hidden;
 }
 .viselitsa__people-hand_right{
     right: 8%;
     top: 20%;
     transform: rotate(-35deg);
+    visibility: hidden;
 }
 
 .viselitsa__people-leg_left{
     left: 8%;
     top: 43%;
     transform: rotate(35deg);
+    visibility: hidden;
 }
 .viselitsa__people-leg_right{
     right: 8%;
     top: 43%;
     transform: rotate(-35deg);
+    visibility: hidden;
+}
+
+.viselitsa__people_active{
+    visibility: visible;
 }
 
 .keyboard{
@@ -158,4 +169,23 @@
 .key{
     margin-right: 4px;
     margin-bottom: 2px;
+}
+.word{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.key-block{
+    width: 20px;
+    margin-right: 5px ;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+.key-word{
+visibility: hidden;
+}
+
+.key-word_visible{
+    visibility: visible;
 }
