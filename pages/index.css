@@ -189,3 +189,7 @@ visibility: hidden;
 .key-word_visible{
     visibility: visible;
 }
+
+.disabled{
+    color: red;
+}
