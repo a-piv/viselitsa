@@ -7,8 +7,12 @@
 // 7. Если висилица нарисована до конца - делаем ... (пишем текст "Ты проиграл") и кнопка "Заново"
 let bodyPart = 0;
 
+
 let body =document.querySelector('.body')
 let keyboard = document.querySelector('.keyboard');
+let buttonNewWord = document.querySelector('.button-new-word');
+let wordString = document.querySelector('.word')
+
 
 // 1. Имеем массив слов
 let words = ['Цветок','Пыль','Мыло','кАртина','зОлото','Часы'];
@@ -30,6 +34,17 @@ function checkAvailability(arr, val) {
     });
 }
 
+
+// Поверяем все ли буквы открты
+// Если у каждый буквы есть класс, то выиграл
+function vinner(arr) {
+    console.log(arr)
+    // return arr.every(function() {
+    //     return arr.classList.contains('key-word_visible')
+    // });
+}
+
+
 function buttonOff (keypress){
     keypress.setAttribute('disabled')
 }
@@ -40,8 +55,11 @@ function listenerr (keyDown, massivBukvi) {
     console.log(massivBukvi);
     console.log(keyDown);
 
-    console.log(bodyPart)
-        
+    if (bodyPart === 6){
+        console.log("Ты проиграл!")
+        document.querySelector('.gameover-add').classList.add('visibility-visible')
+    }
+
 
     if(checkAvailability(massivBukvi, keyDown)) {
         console.log(`Есть буквdddа ${keyDown}`)
@@ -50,6 +68,8 @@ function listenerr (keyDown, massivBukvi) {
                 // запустить функцию открыть букву
                 showChar(i)
                 console.log(`есть буква ${keyDown}`)
+
+                console.log(vinner(massivBukvi))
             }
         })
     }else {
@@ -72,7 +92,6 @@ function disabledKeyboard(key){
         }
         })
 }
-
 
 
 function listenrKey(slovo){
@@ -103,9 +122,26 @@ function showPeople(i){
 }
 
 
+function reset(){
+    wordString.textContent = '';
+    let people = document.querySelectorAll('.human-outline')
+    people.forEach(function (item){
+        item.classList.remove('viselitsa__people_active')
+    })
+
+    let key = document.querySelectorAll('.key')
+    key.forEach(function (item){
+        item.removeAttribute('disabled')
+    })
+    bodyPart = 0;
+
+    document.querySelector('.gameover-add').classList.remove('visibility-visible')
+    document.querySelector('.gameover-add').classList.add('visibility-hidden')
+}
+
 //Создаем "Новое слово"
-let buttonNewWord = document.querySelector('.button-new-word');
-buttonNewWord.addEventListener('click', function (){
+function newWordGenerator(){
+    reset()
     //выбиреме случайное число из массива
     let number = randomWord(words)
     // console.log(number)
@@ -120,11 +156,12 @@ buttonNewWord.addEventListener('click', function (){
         let keyboard = document.querySelector('.word');
         keyboard.append(newWord(item,i));
     })
-
     //Проходимся по каждой букве
     listenrKey(word)
+}
 
-})
+
+buttonNewWord.addEventListener('click', newWordGenerator)
 
 
 // Создать слово
@@ -147,11 +184,6 @@ function kewNew(keyNumber){
 }
 
 
-
-
-
-
-
 alfavitMassivUpper = ['А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ъ','Ы','Ь','Э','Ю','Я'];
 alfavitMassivLower = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я']
 //создать алфавит
@@ -161,5 +193,8 @@ alfavitMassivLower.forEach(function(item){
 
 
 
+const newGame = document.querySelector('.button-new-game');
+newGame.addEventListener('click', newWordGenerator)
 
 
+newWordGenerator()
